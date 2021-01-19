@@ -20,6 +20,8 @@ class ViewController: UITableViewController {
         let path = Bundle.main.resourcePath!
         let items = try! fm.contentsOfDirectory(atPath: path)
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
+        
         for item in items {
             if item.hasPrefix("nssl") {
                 pictures.append(item)
@@ -44,6 +46,13 @@ class ViewController: UITableViewController {
             vc.imageTitle = "Picture \(indexPath.row + 1) of \(pictures.count)"
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    @objc
+    func shareTapped() {
+        let vc = UIActivityViewController(activityItems: ["This is a highly recomemdend app! Download StormViewer now!"], applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
 }
 
